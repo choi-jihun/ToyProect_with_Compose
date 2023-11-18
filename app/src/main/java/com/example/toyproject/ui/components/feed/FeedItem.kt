@@ -2,8 +2,8 @@ package com.example.toyproject.ui.components.feed
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
@@ -14,6 +14,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.toyproject.ui.theme.Paddings
 
 @Composable
@@ -25,8 +26,14 @@ fun FeedItem() {
         modifier = Modifier.padding(Paddings.medium)
     ) {
         var expanded by remember { mutableStateOf(false) }
+        var isLiked by remember {
+            mutableStateOf(false)
+        }
+        var commentClicked by remember {
+            mutableStateOf(false)
+        }
 
-        Column(modifier = Modifier.fillMaxHeight()) {
+        Column(modifier = Modifier.height(700.dp)) {
             UserProfileHeader(
                 imageUrl = "",
                 username = "IU",
@@ -38,6 +45,11 @@ fun FeedItem() {
                 imageUrl = "dummy",
                 expanded = expanded,
                 onExpandedChange = { expanded = it }
+            )
+            FeedActions(
+                onCommentClicked = { commentClicked = !commentClicked },
+                onLikedClicked = { isLiked = !isLiked },
+                isLiked = isLiked
             )
         }
     }
