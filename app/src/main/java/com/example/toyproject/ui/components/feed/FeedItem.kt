@@ -52,12 +52,14 @@ fun FeedItem() {
                 expanded = expanded,
                 onExpandedChange = { expanded = it }
             )
+
             Text(
                 text = "xxxx년 xx월 xx일",
                 modifier = Modifier
                     .padding(horizontal = Paddings.medium)
                     .padding(bottom = Paddings.small)
             )
+
             FeedActions(
                 onCommentClicked = { commentClicked = !commentClicked },
                 onLikedClicked = { isLiked = !isLiked },
