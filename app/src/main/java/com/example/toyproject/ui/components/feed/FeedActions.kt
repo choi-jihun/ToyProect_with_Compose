@@ -31,7 +31,7 @@ fun FeedActions(
             .padding(horizontal = Paddings.medium),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = onCommentClicked) {
             Icon(
                 painter = painterResource(id = R.drawable.baseline_comment_24),
                 contentDescription = "댓글"
@@ -39,7 +39,7 @@ fun FeedActions(
 
         }
         Spacer(modifier = Modifier.padding(Paddings.medium))
-        IconButton(onClick = { /*TODO*/ }) {
+        IconButton(onClick = onLikedClicked) {
             Icon(
                 imageVector = if (isLiked) Icons.Filled.Favorite else Icons.Filled.FavoriteBorder,
                 contentDescription = "좋아요",
