@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Card
 import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -33,7 +35,11 @@ fun FeedItem() {
             mutableStateOf(false)
         }
 
-        Column(modifier = Modifier.height(700.dp)) {
+        Column(
+            modifier = Modifier
+                .height(700.dp)
+                .fillMaxWidth()
+        ) {
             UserProfileHeader(
                 imageUrl = "",
                 username = "IU",
@@ -45,6 +51,12 @@ fun FeedItem() {
                 imageUrl = "dummy",
                 expanded = expanded,
                 onExpandedChange = { expanded = it }
+            )
+            Text(
+                text = "xxxx년 xx월 xx일",
+                modifier = Modifier
+                    .padding(horizontal = Paddings.medium)
+                    .padding(bottom = Paddings.small)
             )
             FeedActions(
                 onCommentClicked = { commentClicked = !commentClicked },
