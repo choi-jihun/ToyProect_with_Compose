@@ -22,12 +22,11 @@ import com.example.toyproject.ui.theme.Paddings
 @Composable
 fun FeedItem() {
     Card(
-        shape = MaterialTheme.shapes.medium,
+        shape = MaterialTheme.shapes.large,
         backgroundColor = MaterialTheme.colors.surface,
         elevation = Paddings.none,
         modifier = Modifier.padding(Paddings.medium)
     ) {
-        var expanded by remember { mutableStateOf(false) }
         var isLiked by remember {
             mutableStateOf(false)
         }
@@ -46,11 +45,9 @@ fun FeedItem() {
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.padding(Paddings.xsmall))
-            FeedContent(
-                textContent = "컨텐츠가 들어갑니다",
-                imageUrl = "dummy",
-                expanded = expanded,
-                onExpandedChange = { expanded = it }
+            FeedExpand(
+                textContent = "컨텐츠가 들어갑니다.컨텐츠가 들어갑니다.컨텐츠가 들어갑니다.컨텐츠가 들어갑니다",
+                imageUrl = "dummy"
             )
 
             Text(
