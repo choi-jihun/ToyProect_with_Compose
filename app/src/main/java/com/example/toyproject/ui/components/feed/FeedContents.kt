@@ -89,7 +89,7 @@ fun FeedExpand(textContent: String, imageUrl: String?) {
         textContent = textContent,
         imageUrl = imageUrl,
         expanded = expanded,
-        onExpandedChange = { expanded = it }
+        onExpandedChange = { expanded = !expanded }
     )
 }
 
