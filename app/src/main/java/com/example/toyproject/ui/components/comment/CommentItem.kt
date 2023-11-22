@@ -157,6 +157,5 @@ fun CommentsListPreview() {
         )
     )
 
-    // 댓글 목록 컴포저블 프리뷰
     CommentsList(comments = sampleComments)
 }
