@@ -94,7 +94,9 @@ fun CommentItem(
                 }
             }
             if (isReplyInputVisible) {
-                CommentSection()
+                CommentSection {
+                    //나중에 서버에 전달하는 로직 구현
+                }
             }
             if (comment.replies.isNotEmpty()) {
                 TextButton(onClick = { onToggleRepliesVisibility(comment.id, !isRepliesVisible) }) {
