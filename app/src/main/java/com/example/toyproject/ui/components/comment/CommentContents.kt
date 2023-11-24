@@ -22,19 +22,20 @@ import com.example.toyproject.ui.theme.color.Gray300
 import com.example.toyproject.ui.theme.color.Gray500
 
 @Composable
-fun CommentSection() {
+fun CommentSection(onCommentSubmit: (String) -> Unit) {
     var comment by remember {
         mutableStateOf("")
-    }
-
-    fun commentSubmit(text: String) {
-        comment = ""
     }
 
     CommentInputField(
         text = comment,
         onTextChange = { comment = it },
-        onCommentSubmit = { commentSubmit(it) }
+        onCommentSubmit = {
+            if (comment.isNotBlank()) {
+                onCommentSubmit(comment)
+                comment = ""
+            }
+        }
     )
 }
 
@@ -42,7 +43,7 @@ fun CommentSection() {
 fun CommentInputField(
     text: String,
     onTextChange: (String) -> Unit,
-    onCommentSubmit: (String) -> Unit
+    onCommentSubmit: () -> Unit
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         TextField(
@@ -56,11 +57,8 @@ fun CommentInputField(
             )
         )
         IconButton(
-            onClick = {
-                if (text.isNotBlank()) {
-                    onCommentSubmit(text)
-                }
-            }, enabled = text.isNotBlank(),
+            onClick = onCommentSubmit,
+            enabled = text.isNotBlank(),
             modifier = Modifier.align(Alignment.CenterVertically)
         ) {
             Icon(
@@ -75,5 +73,7 @@ fun CommentInputField(
 @Preview
 @Composable
 fun CommentInputFieldPreview() {
-    CommentSection()
+    CommentSection {
+        //나중에 서버에 전달하는 로직 구현
+    }
 }
