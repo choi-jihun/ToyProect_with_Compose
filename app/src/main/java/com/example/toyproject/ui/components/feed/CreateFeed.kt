@@ -1,12 +1,14 @@
 package com.example.toyproject.ui.components.feed
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -24,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -44,10 +47,12 @@ fun PostCreationScreen(
     content: String,
     onContentChange: (String) -> Unit,
     onSubmit: () -> Unit,
-    onCancel: () -> Unit
+    onCancel: () -> Unit,
+    onPickFromGallery: () -> Unit,
+    onTakePhoto: () -> Unit
 ) {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxWidth()
     ) {
         TextField(
             value = title,
@@ -91,8 +96,14 @@ fun PostCreationScreen(
             )
         )
 
+        ImagePickerButton(
+            onPickFromGallery = onPickFromGallery,
+            onTakePhoto = onTakePhoto
+        )
+
         FlowRow(
-            modifier = Modifier.padding(8.dp)
+            modifier = Modifier
+                .padding(Paddings.medium)
         ) {
             tags.forEach { tag ->
                 SimpleChip(
@@ -100,6 +111,7 @@ fun PostCreationScreen(
                     onChipClicked = { onTagRemoved(tag) },
                     onRemoveChip = { onTagRemoved(tag) }
                 )
+                Spacer(modifier = Modifier.padding(Paddings.medium))
             }
         }
 
@@ -130,11 +142,20 @@ fun PostCreationScreen(
 
 @Composable
 fun SomeParentComposable(onFeedSubmit: () -> Unit, onCancel: () -> Unit) {
+    val context = LocalContext.current
 
     var title by remember { mutableStateOf("") }
     var inputTag by remember { mutableStateOf("") }
     var content by remember { mutableStateOf("") }
     var tags by remember { mutableStateOf(listOf<String>()) }
+    var imageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val galleryLauncher =
+        rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            if (uri != null) {
+                imageUri = uri
+            }
+        }
 
     val onTagAdded: (String) -> Unit = { newTag ->
         val trimmedTag = newTag.trim().removeSuffix(",").removeSuffix("\n")
@@ -146,6 +167,13 @@ fun SomeParentComposable(onFeedSubmit: () -> Unit, onCancel: () -> Unit) {
 
     val onTagRemoved: (String) -> Unit = { tag ->
         tags = tags.filterNot { it == tag }
+    }
+
+    val onPickFromGallery: () -> Unit = {
+        galleryLauncher.launch("image/*")
+    }
+
+    val onTakePhoto: () -> Unit = {
     }
 
 
@@ -160,7 +188,9 @@ fun SomeParentComposable(onFeedSubmit: () -> Unit, onCancel: () -> Unit) {
         content = content,
         onContentChange = { content = it },
         onSubmit = onFeedSubmit,
-        onCancel = onCancel
+        onCancel = onCancel,
+        onPickFromGallery = onPickFromGallery,
+        onTakePhoto = onTakePhoto
     )
 }
 
