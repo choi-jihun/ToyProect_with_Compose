@@ -2,6 +2,7 @@ package com.example.toyproject.ui.components.feed
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.Icon
@@ -30,7 +31,8 @@ fun SimpleChip(
         shape = MaterialTheme.shapes.large,
         modifier = Modifier
             .padding(Paddings.xsmall)
-            .clickable(onClick = onChipClicked),
+            .clickable(onClick = onChipClicked)
+            .height(40.dp),
         elevation = Paddings.small
     ) {
         Row(
@@ -41,7 +43,9 @@ fun SimpleChip(
                 Icon(
                     imageVector = Icons.Filled.Clear,
                     contentDescription = "칩 삭제",
-                    modifier = Modifier.size(20.dp)
+                    modifier = Modifier
+                        .size(20.dp)
+                        .height(40.dp)
                 )
             }
 
